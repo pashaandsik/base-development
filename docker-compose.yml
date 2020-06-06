@@ -1,0 +1,55 @@
+version: '2.1'
+services:
+  traefik:
+    restart: always
+    image: traefik:1.7-alpine
+    ports:
+        - "80:80"
+        - "443:443"
+        - "81:81"
+    volumes:
+        - ./traefik/traefik.toml:/traefik.toml
+        - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+        traefik.frontend.rule: "Host:traefik.${LOCAL_DOMAIN_ZONE},traefik.localhost"
+        traefik.port: "81"
+    network_mode: "host"
+
+  dns:
+    restart: always
+    image: defreitas/dns-proxy-server:2.9.1
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./dns/config.json:/app/conf/config.json
+    labels:
+        traefik.frontend.rule: "Host:dns.${LOCAL_DOMAIN_ZONE}"
+        traefik.port: "5380"
+    ports:
+        - ${DOCKER_IP}:53:53/udp
+        - ${HOST_IP}:53:53/udp
+    networks:
+        dns:
+          ipv4_address: 192.168.10.5
+
+  portainer:
+      restart: always
+      image: portainer/portainer
+      volumes:
+          - ./.data/portainer:/data
+          - /var/run/docker.sock:/var/run/docker.sock
+      labels:
+          traefik.frontend.rule: "Host:docker.${LOCAL_DOMAIN_ZONE}"
+          traefik.port: "9000"
+      networks:
+        - docker_base
+
+
+networks:
+  docker_base:
+    driver: bridge
+    name: workspace
+  dns:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24

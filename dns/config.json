@@ -1,0 +1,24 @@
+{
+	"remoteDnsServers": [[192, 168, 1, 1], [8, 8, 8, 8]],
+	"envs": [
+		{
+			"name": "",
+			"hostnames": [
+              {
+                "id": 1,
+                "hostname": ".localhost",
+                "ip": [172, 17, 0, 1],
+                "ttl": 1
+              }
+			]
+		}
+	],
+	"activeEnv": "",
+	"lastId": 1,
+	"webServerPort": 0,
+	"dnsServerPort": 0,
+	"defaultDns": null,
+	"logLevel": "INFO",
+	"logFile": "console",
+	"registerContainerNames": null
+}
