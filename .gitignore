@@ -1,0 +1,18 @@
+# Ignore cache and migrate folder
+*/__pycache__/
+
+*/.benchmarks/*
+
+.idea/
+.directory
+.cache/
+.python-version
+venv/*
+
+# Ignore logfiles
+/logs/*.log*
+node_modules/*
+
+
+# Other
+*.ipynb
