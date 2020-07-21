@@ -1,6 +1,15 @@
 version: '2.1'
 services:
-  traefik:
+  tor:
+    hostname: tor.localhost
+    image: peterdavehello/tor-socks-proxy:latest
+    restart: always
+    ports:
+      - "9150:9150/tcp"
+    networks:
+      - docker_base
+
+  proxy:
     restart: always
     image: traefik:1.7-alpine
     ports:
