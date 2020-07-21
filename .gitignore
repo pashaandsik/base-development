@@ -12,6 +12,7 @@ venv/*
 # Ignore logfiles
 /logs/*.log*
 node_modules/*
+.data/
 
 .env
 .data/
