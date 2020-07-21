@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   tor:
-    hostname: tor.localhost
+    hostname: tor.services
     image: peterdavehello/tor-socks-proxy:latest
     restart: always
     ports:
@@ -23,6 +23,14 @@ services:
         traefik.frontend.rule: "Host:traefik.${LOCAL_DOMAIN_ZONE},traefik.localhost"
         traefik.port: "81"
     network_mode: "host"
+
+  redis:
+    hostname: redis.services
+    image: redis:latest
+    networks:
+      - docker_base
+    logging:
+      driver: none
 
   database:
     image: "postgres:12"
